@@ -1,0 +1,60 @@
+-- Delta Executor - Script Universel Simple (Bouton)
+-- Clique sur le bouton pour charger les 2 scripts
+
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Création du ScreenGui (simple, pas de visuel flashy)
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "DeltaUniversalButton"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+-- Le Bouton
+local button = Instance.new("TextButton")
+button.Name = "LoadScriptsButton"
+button.Size = UDim2.new(0, 200, 0, 50)
+button.Position = UDim2.new(0, 20, 0, 20)  -- En haut à gauche
+button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+button.TextColor3 = Color3.new(1, 1, 1)
+button.Text = "🚀 Charger Scripts"
+button.TextScaled = true
+button.Font = Enum.Font.GothamBold
+button.BorderSizePixel = 0
+button.Parent = screenGui
+
+-- Coin arrondi
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 8)
+corner.Parent = button
+
+-- Effet au survol
+button.MouseEnter:Connect(function()
+    button.BackgroundColor3 = Color3.fromRGB(0, 140, 220)
+end)
+
+button.MouseLeave:Connect(function()
+    button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+end)
+
+-- Fonction quand on clique
+button.MouseButton1Click:Connect(function()
+    -- Premier script : Grab Knife V3
+    pcall(function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-grab-knife-v3-112292"))()
+        print("✅ Grab Knife V3 chargé")
+    end)
+    
+    -- Deuxième script : Universal Keyboard Mobile
+    pcall(function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Universal-Keyboard-Mobile-58926"))()
+        print("✅ Universal Keyboard Mobile chargé")
+    end)
+    
+    -- Feedback visuel
+    button.Text = "✅ Scripts activés !"
+    wait(2)
+    button.Text = "🚀 Charger Scripts"
+end)
+
+print("✅ Bouton Delta chargé ! Clique sur le bouton bleu en haut à gauche.")
