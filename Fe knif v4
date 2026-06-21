@@ -1,60 +1,87 @@
--- Delta Executor - Script Universel Simple (Bouton)
--- Clique sur le bouton pour charger les 2 scripts
+-- Delta Executor - Script Universel avec 2 boutons
 
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Création du ScreenGui (simple, pas de visuel flashy)
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "DeltaUniversalButton"
+screenGui.Name = "DeltaUniversalButtons"
 screenGui.ResetOnSpawn = false
 screenGui.Parent = playerGui
 
--- Le Bouton
-local button = Instance.new("TextButton")
-button.Name = "LoadScriptsButton"
-button.Size = UDim2.new(0, 200, 0, 50)
-button.Position = UDim2.new(0, 20, 0, 20)  -- En haut à gauche
-button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-button.TextColor3 = Color3.new(1, 1, 1)
-button.Text = "🚀 Charger Scripts"
-button.TextScaled = true
-button.Font = Enum.Font.GothamBold
-button.BorderSizePixel = 0
-button.Parent = screenGui
+-- === PREMIER BOUTON (Les deux scripts) ===
+local btnBoth = Instance.new("TextButton")
+btnBoth.Name = "LoadBothButton"
+btnBoth.Size = UDim2.new(0, 220, 0, 60)
+btnBoth.Position = UDim2.new(0, 20, 0, 20)
+btnBoth.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+btnBoth.TextColor3 = Color3.new(1, 1, 1)
+btnBoth.Text = "⚔️ Grab Knife + Keyboard"
+btnBoth.TextScaled = true
+btnBoth.Font = Enum.Font.GothamBold
+btnBoth.BorderSizePixel = 0
+btnBoth.Parent = screenGui
 
--- Coin arrondi
-local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(0, 8)
-corner.Parent = button
+local corner1 = Instance.new("UICorner")
+corner1.CornerRadius = UDim.new(0, 10)
+corner1.Parent = btnBoth
 
--- Effet au survol
-button.MouseEnter:Connect(function()
-    button.BackgroundColor3 = Color3.fromRGB(0, 140, 220)
-end)
+-- === DEUXIÈME BOUTON (Seulement Keyboard) ===
+local btnKeyboard = Instance.new("TextButton")
+btnKeyboard.Name = "LoadKeyboardButton"
+btnKeyboard.Size = UDim2.new(0, 220, 0, 60)
+btnKeyboard.Position = UDim2.new(0, 20, 0, 90)
+btnKeyboard.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+btnKeyboard.TextColor3 = Color3.new(1, 1, 1)
+btnKeyboard.Text = "⌨️ Universal Keyboard Only"
+btnKeyboard.TextScaled = true
+btnKeyboard.Font = Enum.Font.GothamBold
+btnKeyboard.BorderSizePixel = 0
+btnKeyboard.Parent = screenGui
 
-button.MouseLeave:Connect(function()
-    button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-end)
+local corner2 = Instance.new("UICorner")
+corner2.CornerRadius = UDim.new(0, 10)
+corner2.Parent = btnKeyboard
 
--- Fonction quand on clique
-button.MouseButton1Click:Connect(function()
-    -- Premier script : Grab Knife V3
+-- Effets survol
+local function addHoverEffect(btn, normalColor, hoverColor)
+    btn.MouseEnter:Connect(function()
+        btn.BackgroundColor3 = hoverColor
+    end)
+    btn.MouseLeave:Connect(function()
+        btn.BackgroundColor3 = normalColor
+    end)
+end
+
+addHoverEffect(btnBoth, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 130, 220))
+addHoverEffect(btnKeyboard, Color3.fromRGB(255, 100, 100), Color3.fromRGB(220, 70, 70))
+
+-- === PREMIER BOUTON : Les deux scripts ===
+btnBoth.MouseButton1Click:Connect(function()
     pcall(function()
         loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-grab-knife-v3-112292"))()
         print("✅ Grab Knife V3 chargé")
     end)
     
-    -- Deuxième script : Universal Keyboard Mobile
     pcall(function()
         loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Universal-Keyboard-Mobile-58926"))()
         print("✅ Universal Keyboard Mobile chargé")
     end)
     
-    -- Feedback visuel
-    button.Text = "✅ Scripts activés !"
-    wait(2)
-    button.Text = "🚀 Charger Scripts"
+    btnBoth.Text = "✅ Activé !"
+    wait(1.5)
+    btnBoth.Text = "⚔️ Grab Knife + Keyboard"
 end)
 
-print("✅ Bouton Delta chargé ! Clique sur le bouton bleu en haut à gauche.")
+-- === DEUXIÈME BOUTON : Seulement Keyboard ===
+btnKeyboard.MouseButton1Click:Connect(function()
+    pcall(function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Universal-Keyboard-Mobile-58926"))()
+        print("✅ Universal Keyboard Mobile chargé")
+    end)
+    
+    btnKeyboard.Text = "✅ Activé !"
+    wait(1.5)
+    btnKeyboard.Text = "⌨️ Universal Keyboard Only"
+end)
+
+print("✅ Deux boutons Delta chargés !")
